@@ -41,6 +41,17 @@ Dashboard code: https://github.com/Amruthjinesh/status-dashboard
 | outputs.tf | public IP, dashboard URL, SSH command |
 | .gitignore | keeps state, .terraform, tfvars and keys out of git |
 
+## How I built it
+
+1. `variables.tf`: region, instance_type, key_name, my_ip, db_password
+2. `main.tf`: AWS provider and Ubuntu 24.04 image lookup
+3. `main.tf`: security group, SSH (22) and dashboard (8000) from my IP only
+4. `main.tf`: EC2 t3.micro with Docker installed through `user_data`
+5. `outputs.tf`: public IP, dashboard URL, SSH command
+6. `user_data`: install Compose, clone the dashboard repo, write the settings file, run `docker compose up`
+7. Tested with `terraform init`, `validate`, `plan` and `apply`, then `terraform destroy`
+8. Rebuilt the server with one `terraform apply` to prove no manual steps are left
+
 ## Requirements
 
 - Terraform and AWS CLI, configured with an IAM user
